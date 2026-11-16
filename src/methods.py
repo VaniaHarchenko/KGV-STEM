@@ -20,3 +20,11 @@ def threshold_segmentation(image, threshold=128):
     result = np.zeros_like(image)
     result[image >= threshold] = 255
     return result
+
+def histogram_equalization(image):
+    hist, _ = np.histogram(image.flatten(), 256, [0, 256])
+    cdf = hist.cumsum()
+    cdf_masked = np.ma.masked_equal(cdf, 0)
+    cdf_masked = (cdf_masked - cdf_masked.min()) * 255 / (cdf_masked.max() - cdf_masked.min())
+    cdf_final = np.ma.filled(cdf_masked, 0).astype('uint8')
+    return cdf_final[image]

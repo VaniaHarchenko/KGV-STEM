@@ -18,7 +18,7 @@ def main():
     parser.add_argument("--output", type=str, default=DEFAULT_OUTPUT, help="Головна папка результатів")
     # Поки що доступний лише пайплайн 1-го учасника
     parser.add_argument("--pipeline", type=str, required=True, 
-                        choices=["student1_p1"], 
+                        choices=["student1_p1", "student2_p1"], 
                         help="Який пайплайн запустити")
     
     args = parser.parse_args()
