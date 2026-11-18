@@ -32,3 +32,14 @@ def threshold_segmentation(image, threshold=128):
 def adjust_brightness(image, value=30):
     img_float = image.astype(np.float32) + value
     return np.clip(img_float, 0, 255).astype(np.uint8)
+
+def apply_laplacian(image):
+    padded = np.pad(image, 1, mode='edge').astype(np.float32)
+    result = (
+        padded[0:-2, 1:-1] * 1 +   
+        padded[2:, 1:-1] * 1 +     
+        padded[1:-1, 0:-2] * 1 +   
+        padded[1:-1, 2:] * 1 +     
+        padded[1:-1, 1:-1] * -4    
+    )
+    return np.clip(result, 0, 255).astype(np.uint8)

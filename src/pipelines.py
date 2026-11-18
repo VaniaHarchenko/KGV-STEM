@@ -1,6 +1,6 @@
 from src.methods import (
     to_grayscale, apply_sobel, threshold_segmentation, 
-    histogram_equalization, adjust_brightness
+    histogram_equalization, adjust_brightness, apply_laplacian
 )
 
 def run_pipeline(image, pipeline_name, config):
@@ -24,6 +24,13 @@ def run_pipeline(image, pipeline_name, config):
         s1_gray = to_grayscale(s1)
         s2 = histogram_equalization(s1_gray)
         return s2
+
+    elif pipeline_name == "student2_p2":
+        # Учасник 2: Аналіз аномалій поверхні (радіолокаційні контури)
+        s1 = to_grayscale(image)
+        s2 = apply_laplacian(s1)
+        s3 = threshold_segmentation(s2, config.get("threshold", 40))
+        return s3
         
     else:
         raise ValueError(f"Невідомий пайплайн: {pipeline_name}")

@@ -17,9 +17,8 @@ def main():
     parser.add_argument("--input", type=str, default=DEFAULT_INPUT, help="Папка з оригіналами")
     parser.add_argument("--output", type=str, default=DEFAULT_OUTPUT, help="Головна папка результатів")
     
-    # Доступні 3 пайплайни (твої два і один Юрія)
     parser.add_argument("--pipeline", type=str, required=True, 
-                        choices=["student1_p1", "student2_p1", "student1_p2"], 
+                        choices=["student1_p1", "student2_p1", "student1_p2", "student2_p2"], 
                         help="Який пайплайн запустити")
     
     args = parser.parse_args()

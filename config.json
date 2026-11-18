@@ -8,6 +8,9 @@
         },
         "student1_p2": {
             "brightness_offset": 40
+        },
+        "student2_p2": {
+            "threshold": 40
         }
     }
 }
