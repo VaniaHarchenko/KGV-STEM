@@ -5,6 +5,14 @@ def to_grayscale(image):
     gray = np.dot(image[..., :3], [0.299, 0.587, 0.114])
     return np.clip(gray, 0, 255).astype(np.uint8)
 
+def histogram_equalization(image):
+    hist, _ = np.histogram(image.flatten(), 256, [0, 256])
+    cdf = hist.cumsum()
+    cdf_masked = np.ma.masked_equal(cdf, 0)
+    cdf_masked = (cdf_masked - cdf_masked.min()) * 255 / (cdf_masked.max() - cdf_masked.min())
+    cdf_final = np.ma.filled(cdf_masked, 0).astype('uint8')
+    return cdf_final[image]
+
 def apply_sobel(image):
     padded = np.pad(image, 1, mode='edge').astype(np.float32)
     gx = (padded[0:-2, 2:] - padded[0:-2, 0:-2]) + \
@@ -21,10 +29,6 @@ def threshold_segmentation(image, threshold=128):
     result[image >= threshold] = 255
     return result
 
-def histogram_equalization(image):
-    hist, _ = np.histogram(image.flatten(), 256, [0, 256])
-    cdf = hist.cumsum()
-    cdf_masked = np.ma.masked_equal(cdf, 0)
-    cdf_masked = (cdf_masked - cdf_masked.min()) * 255 / (cdf_masked.max() - cdf_masked.min())
-    cdf_final = np.ma.filled(cdf_masked, 0).astype('uint8')
-    return cdf_final[image]
+def adjust_brightness(image, value=30):
+    img_float = image.astype(np.float32) + value
+    return np.clip(img_float, 0, 255).astype(np.uint8)
