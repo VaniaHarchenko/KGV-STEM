@@ -14,3 +14,5 @@ def test_threshold_segmentation():
     assert result[0, 1] == 255
     assert result[1, 0] == 255
     assert result[1, 1] == 0
+    
+    

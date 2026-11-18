@@ -13,12 +13,13 @@ DEFAULT_OUTPUT = os.path.join(BASE_DIR, "results")
 DEFAULT_CONFIG = os.path.join(BASE_DIR, "config.json")
 
 def main():
-    parser = argparse.ArgumentParser(description="STEM Проєкт - Військова техніка")
+    parser = argparse.ArgumentParser(description="STEM Проєкт - Команда 2")
     parser.add_argument("--input", type=str, default=DEFAULT_INPUT, help="Папка з оригіналами")
     parser.add_argument("--output", type=str, default=DEFAULT_OUTPUT, help="Головна папка результатів")
-    # Поки що доступний лише пайплайн 1-го учасника
+    
+    # Доступні 3 пайплайни (твої два і один Юрія)
     parser.add_argument("--pipeline", type=str, required=True, 
-                        choices=["student1_p1", "student2_p1"], 
+                        choices=["student1_p1", "student2_p1", "student1_p2"], 
                         help="Який пайплайн запустити")
     
     args = parser.parse_args()
@@ -53,6 +54,7 @@ def main():
             from src.methods import to_grayscale
             orig_gray = to_grayscale(image)
             res_gray = to_grayscale(result_image)
+            
             mse = calculate_mse(orig_gray, res_gray)
             psnr = calculate_psnr(orig_gray, res_gray)
         except Exception:
